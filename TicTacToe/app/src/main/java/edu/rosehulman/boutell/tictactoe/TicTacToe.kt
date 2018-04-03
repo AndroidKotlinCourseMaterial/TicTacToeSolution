@@ -2,7 +2,6 @@ package edu.rosehulman.boutell.tictactoe
 
 
 import android.content.Context
-import android.content.res.Resources
 import android.util.Log
 
 class TicTacToeGame(private val context: Context) {
@@ -102,7 +101,7 @@ class TicTacToeGame(private val context: Context) {
             return true
 
         // Check up right diagonal
-        return if (this.boardArray!![2][0] == markType && this.boardArray!![1][1] == markType && this.boardArray!![0][2] == markType) true else false
+        return this.boardArray!![2][0] == markType && this.boardArray!![1][1] == markType && this.boardArray!![0][2] == markType
 
     }
 
@@ -119,25 +118,22 @@ class TicTacToeGame(private val context: Context) {
     }
 
     fun stringForGameState(): String {
-        var gameStateLabel = ""
         val r = this.context.resources
-        when (this.gameState) {
-            TicTacToeGame.GameState.X_TURN -> gameStateLabel = r.getString(R.string.x_turn)
-            TicTacToeGame.GameState.O_TURN -> gameStateLabel = r.getString(R.string.o_turn)
-            TicTacToeGame.GameState.X_WIN -> gameStateLabel = r.getString(R.string.x_win)
-            TicTacToeGame.GameState.O_WIN -> gameStateLabel = r.getString(R.string.o_win)
-            else -> gameStateLabel = r.getString(R.string.tie_game)
+        return when (this.gameState) {
+            TicTacToeGame.GameState.X_TURN -> r.getString(R.string.x_turn)
+            TicTacToeGame.GameState.O_TURN -> r.getString(R.string.o_turn)
+            TicTacToeGame.GameState.X_WIN -> r.getString(R.string.x_win)
+            TicTacToeGame.GameState.O_WIN -> r.getString(R.string.o_win)
+            else -> r.getString(R.string.tie_game)
         }
-        return gameStateLabel
     }
 
     companion object {
+        const val NUM_ROWS = 3
+        const val NUM_COLUMNS = 3
 
-        val NUM_ROWS = 3
-        val NUM_COLUMNS = 3
-
-        private val MARK_NONE = 0
-        private val MARK_X = 1
-        private val MARK_O = 2
+        private const val MARK_NONE = 0
+        private const val MARK_X = 1
+        private const val MARK_O = 2
     }
 }

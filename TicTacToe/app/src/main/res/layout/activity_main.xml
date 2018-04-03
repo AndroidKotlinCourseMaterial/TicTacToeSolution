@@ -1,18 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".MainActivity">
 
-    <TextView
+    <TableLayout
+        android:id="@+id/tableLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="18dp">
 
-</android.support.constraint.ConstraintLayout>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/button00"
+                style="@style/TTTButton"
+                android:text="@string/space" />
+
+            <Button
+                android:id="@+id/button01"
+                style="@style/TTTButton"
+                android:text="@string/space" />
+
+            <Button
+                android:id="@+id/button02"
+                style="@style/TTTButton"
+                android:text="@string/space" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/button10"
+                style="@style/TTTButton"
+                android:text="@string/space" />
+
+            <Button
+                android:id="@+id/button11"
+                style="@style/TTTButton"
+                android:text="@string/space" />
+
+            <Button
+                android:id="@+id/button12"
+                style="@style/TTTButton"
+                android:text="@string/space" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/button20"
+                style="@style/TTTButton"
+                android:text="@string/space" />
+
+            <Button
+                android:id="@+id/button21"
+                style="@style/TTTButton"
+                android:text="@string/space" />
+
+            <Button
+                android:id="@+id/button22"
+                style="@style/TTTButton"
+                android:text="@string/space" />
+        </TableRow>
+
+
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/message_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tableLayout"
+        android:layout_centerHorizontal="true"
+        android:text="@string/x_turn"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/new_game_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/tableLayout"
+        android:layout_alignRight="@+id/tableLayout"
+        android:layout_below="@+id/tableLayout"
+        android:text="@string/new_game" />
+</RelativeLayout>
