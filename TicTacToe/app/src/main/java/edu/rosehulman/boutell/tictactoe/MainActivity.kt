@@ -1,48 +1,43 @@
 package edu.rosehulman.boutell.tictactoe
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Button
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-
-    private var mGame: TicTacToeGame = TicTacToeGame(this)
-    private val mTicTacToeButtons: Array<Array<Button?>> = Array(3, { arrayOfNulls<Button>(3)})
+    private val game = TicTacToeGame(this)
+    private val tttButtons: Array<Array<Button?>> = Array(TicTacToeGame.NUM_ROWS, { arrayOfNulls<Button>(TicTacToeGame.NUM_COLUMNS)})
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        new_game_button.setOnClickListener {
-            mGame.resetGame()
-            updateView()
-        }
-
-        for (row in 0..2) {
-            for (col in 0..2) {
-                var id = resources.getIdentifier("button" + row + col, "id", packageName)
-                mTicTacToeButtons[row][col] = findViewById(id)
-                mTicTacToeButtons[row][col]?.setOnClickListener {
-                    mGame.pressedButtonAtLocation(row, col)
+        game.resetGame()
+        for (row in 0 until TicTacToeGame.NUM_ROWS) {
+            for (col in 0 until TicTacToeGame.NUM_COLUMNS) {
+                val id = resources.getIdentifier("button$row$col", "id", packageName)
+                tttButtons[row][col] = findViewById(id)
+                tttButtons[row][col]?.setOnClickListener {
+                    game.pressedButtonAt(row, col)
                     updateView()
+                    Log.d(Constants.TAG, "Pressed button ($row,$col)")
                 }
             }
         }
 
-
-
+        new_game_button.setOnClickListener {
+                game.resetGame()
+                updateView()
+        }
     }
 
-    fun updateView() {
-        message_text.text = mGame.stringForGameState()
-        for (row in 0..2) {
-            for (col in 0..2) {
-                mTicTacToeButtons[row][col]?.text = mGame.stringForButtonAtLocation(row, col)
+    private fun updateView() {
+        game_state_text_view.text = game.stringForGameState()
+        for (row in 0 until TicTacToeGame.NUM_ROWS) {
+            for (col in 0 until TicTacToeGame.NUM_COLUMNS) {
+                tttButtons[row][col]?.text = game.stringForButtonAt(row, col)
             }
         }
-        Log.d(Constants.TAG, "updating")
     }
-
 }
