@@ -4,21 +4,20 @@ import android.content.Context
 
 class TicTacToeGame() {
 
-    // Demonstrates two options.
-    // (1) Since we must give the array a value here, we make the array nullable
-    private var board: Array<IntArray>? = null
-    var gameState: GameState? = null
-    // (2) Or we can use lateinit, which tells Kotlin that we promise to
-    // give it a value later.
-    private lateinit var context: Context
+    // There are three options for initializing variables.
+    // If you have a value, non-null initial value, use it (what we do here).
+    // Otherwise, if you will have one later in the initialization, then you can
+    // declare it as lateinit, which tells Kotlin that we promise to
+    // give it a value soon.
+    // The final option is to give it a nullable type (ending in ?).
+    // That means that every time you use that variable, you need to append either
+    // a ?, which means to only access the object's fields/methods if the object
+    // isn't null, or a !!, which is the hammer to tell Kotlin you know it's not
+    // null and it must proceed whether it wants to or not!
+    private var board = Array(NUM_ROWS) { IntArray(NUM_COLUMNS) }
+    var gameState = GameState.X_TURN
 
-    enum class GameState {
-        X_TURN,
-        O_TURN,
-        X_WIN,
-        O_WIN,
-        TIE_GAME
-    }
+    private lateinit var context: Context
 
     init {
         resetGame()
@@ -34,10 +33,12 @@ class TicTacToeGame() {
     }
 
     fun stringForButtonAt(row: Int, column: Int): String {
+        // Don't like to explicitly use -1? Use "until" in your condition
+        // or loop (see next function for an example)
         if (row in 0..(NUM_ROWS - 1) && column in 0..(NUM_COLUMNS - 1)) {
-            if (board!![row][column] == MARK_X) {
+            if (board[row][column] == MARK_X) {
                 return "X"
-            } else if (board!![row][column] == MARK_O) {
+            } else if (board[row][column] == MARK_O) {
                 return "O"
             }
         }
@@ -50,22 +51,21 @@ class TicTacToeGame() {
         if (row !in 0 until NUM_ROWS || column !in 0 until NUM_COLUMNS) {
             return
         }
-        if (board!![row][column] != MARK_NONE) {
+        if (board[row][column] != MARK_NONE) {
             return
         }
 
         if (gameState == GameState.X_TURN) {
-            board!![row][column] = MARK_X
+            board[row][column] = MARK_X
             gameState = GameState.O_TURN
-            checkForWin()
         } else if (gameState == GameState.O_TURN) {
-            board!![row][column] = MARK_O
+            board[row][column] = MARK_O
             gameState = GameState.X_TURN
-            checkForWin()
         }
+        checkForWin()
     }
 
-    fun checkForWin() {
+    private fun checkForWin() {
         if (gameState != GameState.X_TURN && gameState != GameState.O_TURN) {
             return
         }
@@ -79,11 +79,11 @@ class TicTacToeGame() {
         }
     }
 
-    fun didPieceWin(mark: Int): Boolean {
+    private fun didPieceWin(mark: Int): Boolean {
         for (row in 0 until NUM_ROWS) {
             var winHere = true
             for (col in 0 until NUM_COLUMNS) {
-                if (board!![row][col] != mark) {
+                if (board[row][col] != mark) {
                     winHere = false
                 }
             }
@@ -95,7 +95,7 @@ class TicTacToeGame() {
         for (col in 0 until NUM_COLUMNS) {
             var winHere = true
             for (row in 0 until NUM_ROWS) {
-                if (board!![row][col] != mark) {
+                if (board[row][col] != mark) {
                     winHere = false
                 }
             }
@@ -106,15 +106,17 @@ class TicTacToeGame() {
 
         var winHere = true
         for (row in 0 until NUM_ROWS) {
-            if (board!![row][row] != mark) {
+            if (board[row][row] != mark) {
                 winHere = false
             }
         }
         if (winHere) {
             return true
         }
+        
+        winHere = true
         for (row in 0 until NUM_ROWS) {
-            if (board!![row][NUM_ROWS-row-1] != mark) {
+            if (board[row][NUM_ROWS-row-1] != mark) {
                 winHere = false
             }
         }
@@ -127,7 +129,7 @@ class TicTacToeGame() {
     fun isBoardFull(): Boolean {
         for (row in 0 until NUM_ROWS) {
             for (col in 0 until NUM_COLUMNS) {
-                if (board!![row][col] == MARK_NONE) {
+                if (board[row][col] == MARK_NONE) {
                     return false
                 }
             }
@@ -135,14 +137,16 @@ class TicTacToeGame() {
         return true
     }
 
-    companion object {
-        val NUM_ROWS = 3
-        val NUM_COLUMNS = 3
-        private val MARK_NONE = 0
-        private val MARK_X = 1
-        private val MARK_O = 2
+    enum class GameState {
+        X_TURN,
+        O_TURN,
+        X_WIN,
+        O_WIN,
+        TIE_GAME
     }
 
+    // Pulling strings from resources requires a context, so we need
+    // an additional constructor.
     fun stringForGameState(): String {
         return when (gameState) {
             GameState.X_WIN -> context.getString(R.string.x_wins)
@@ -152,4 +156,14 @@ class TicTacToeGame() {
             else -> context.getString(R.string.tie_game)
         }
     }
+
+    companion object {
+        val NUM_ROWS = 3
+        val NUM_COLUMNS = 3
+        // I probably should have used an enumeration for the marks too.
+        private val MARK_NONE = 0
+        private val MARK_X = 1
+        private val MARK_O = 2
+    }
+
 }
