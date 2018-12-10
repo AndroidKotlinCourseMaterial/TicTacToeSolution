@@ -113,7 +113,7 @@ class TicTacToeGame() {
         if (winHere) {
             return true
         }
-        
+
         winHere = true
         for (row in 0 until NUM_ROWS) {
             if (board[row][NUM_ROWS-row-1] != mark) {
