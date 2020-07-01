@@ -1,9 +1,7 @@
 package edu.rosehulman.boutell.tictactoe
 
-import edu.rosehulman.boutell.tictactoe.TicTacToeGame
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -25,11 +23,11 @@ class TicTacToeGameTest {
     @Test
     fun press() {
         val game = TicTacToeGame()
-        game.pressedButtonAt(1, 2)
+        game.pressButtonAt(1, 2)
         assertEquals("X", game.stringForButtonAt(1, 2))
-        game.pressedButtonAt(2, 2)
+        game.pressButtonAt(2, 2)
         assertEquals("O", game.stringForButtonAt(2, 2))
-        game.pressedButtonAt(2, 2)
+        game.pressButtonAt(2, 2)
         assertEquals("O", game.stringForButtonAt(2, 2))
     }
 
@@ -37,11 +35,11 @@ class TicTacToeGameTest {
     fun pressOutOfBoundsIsIgnored() {
         val game = TicTacToeGame()
         assertEquals(TicTacToeGame.GameState.X_TURN, game.gameState)
-        game.pressedButtonAt(3, 1)
+        game.pressButtonAt(3, 1)
         assertEquals(TicTacToeGame.GameState.X_TURN, game.gameState)
-        game.pressedButtonAt(-1, 1)
-        game.pressedButtonAt(1, 3)
-        game.pressedButtonAt(1, -1)
+        game.pressButtonAt(-1, 1)
+        game.pressButtonAt(1, 3)
+        game.pressButtonAt(1, -1)
         assertEquals(TicTacToeGame.GameState.X_TURN, game.gameState)
 
 
@@ -51,15 +49,15 @@ class TicTacToeGameTest {
     fun detectWinEasy() {
         val game = TicTacToeGame()
         assertEquals(TicTacToeGame.GameState.X_TURN, game.gameState)
-        game.pressedButtonAt(0, 0) // X
+        game.pressButtonAt(0, 0) // X
         assertEquals(TicTacToeGame.GameState.O_TURN, game.gameState)
-        game.pressedButtonAt(2, 0) // O
+        game.pressButtonAt(2, 0) // O
         assertEquals(TicTacToeGame.GameState.X_TURN, game.gameState)
-        game.pressedButtonAt(0, 1) // X
+        game.pressButtonAt(0, 1) // X
         assertEquals(TicTacToeGame.GameState.O_TURN, game.gameState)
-        game.pressedButtonAt(2, 2) // O
+        game.pressButtonAt(2, 2) // O
         assertEquals(TicTacToeGame.GameState.X_TURN, game.gameState)
-        game.pressedButtonAt(0, 2) // X
+        game.pressButtonAt(0, 2) // X
         assertEquals(TicTacToeGame.GameState.X_WIN, game.gameState)
     }
 
@@ -67,19 +65,19 @@ class TicTacToeGameTest {
     fun detectWinForce() {
         val game = TicTacToeGame()
         assertEquals(TicTacToeGame.GameState.X_TURN, game.gameState)
-        game.pressedButtonAt(1, 1)
+        game.pressButtonAt(1, 1)
         assertEquals(TicTacToeGame.GameState.O_TURN, game.gameState)
-        game.pressedButtonAt(0, 1)
+        game.pressButtonAt(0, 1)
         assertEquals(TicTacToeGame.GameState.X_TURN, game.gameState)
-        game.pressedButtonAt(0, 0)
+        game.pressButtonAt(0, 0)
         assertEquals(TicTacToeGame.GameState.O_TURN, game.gameState)
-        game.pressedButtonAt(2, 2)
+        game.pressButtonAt(2, 2)
         assertEquals(TicTacToeGame.GameState.X_TURN, game.gameState)
-        game.pressedButtonAt(2, 0)
+        game.pressButtonAt(2, 0)
         assertEquals(TicTacToeGame.GameState.O_TURN, game.gameState)
-        game.pressedButtonAt(0, 2)
+        game.pressButtonAt(0, 2)
         assertEquals(TicTacToeGame.GameState.X_TURN, game.gameState)
-        game.pressedButtonAt(1, 0)
+        game.pressButtonAt(1, 0)
         assertEquals(TicTacToeGame.GameState.X_WIN, game.gameState)
     }
 
@@ -87,23 +85,23 @@ class TicTacToeGameTest {
     fun detectTie() {
         val game = TicTacToeGame()
         assertEquals(TicTacToeGame.GameState.X_TURN, game.gameState)
-        game.pressedButtonAt(1, 1)
+        game.pressButtonAt(1, 1)
         assertEquals(TicTacToeGame.GameState.O_TURN, game.gameState)
-        game.pressedButtonAt(0, 1)
+        game.pressButtonAt(0, 1)
         assertEquals(TicTacToeGame.GameState.X_TURN, game.gameState)
-        game.pressedButtonAt(0, 0)
+        game.pressButtonAt(0, 0)
         assertEquals(TicTacToeGame.GameState.O_TURN, game.gameState)
-        game.pressedButtonAt(2, 2)
+        game.pressButtonAt(2, 2)
         assertEquals(TicTacToeGame.GameState.X_TURN, game.gameState)
-        game.pressedButtonAt(2, 0)
+        game.pressButtonAt(2, 0)
         assertEquals(TicTacToeGame.GameState.O_TURN, game.gameState)
-        game.pressedButtonAt(0, 2)
+        game.pressButtonAt(0, 2)
         assertEquals(TicTacToeGame.GameState.X_TURN, game.gameState)
-        game.pressedButtonAt(1, 2)
+        game.pressButtonAt(1, 2)
         assertEquals(TicTacToeGame.GameState.O_TURN, game.gameState)
-        game.pressedButtonAt(1, 0)
+        game.pressButtonAt(1, 0)
         assertEquals(TicTacToeGame.GameState.X_TURN, game.gameState)
-        game.pressedButtonAt(2, 1)
+        game.pressButtonAt(2, 1)
         assertEquals(TicTacToeGame.GameState.TIE_GAME, game.gameState)
     }
 
@@ -111,15 +109,15 @@ class TicTacToeGameTest {
     fun detectXWinsBottomLeftToUpperRightDiagonal() {
         val game = TicTacToeGame()
         assertEquals(TicTacToeGame.GameState.X_TURN, game.gameState)
-        game.pressedButtonAt(0, 2)
+        game.pressButtonAt(0, 2)
         assertEquals(TicTacToeGame.GameState.O_TURN, game.gameState)
-        game.pressedButtonAt(0, 1)
+        game.pressButtonAt(0, 1)
         assertEquals(TicTacToeGame.GameState.X_TURN, game.gameState)
-        game.pressedButtonAt(1, 1)
+        game.pressButtonAt(1, 1)
         assertEquals(TicTacToeGame.GameState.O_TURN, game.gameState)
-        game.pressedButtonAt(2, 2)
+        game.pressButtonAt(2, 2)
         assertEquals(TicTacToeGame.GameState.X_TURN, game.gameState)
-        game.pressedButtonAt(2, 0)
+        game.pressButtonAt(2, 0)
         assertEquals(TicTacToeGame.GameState.X_WIN, game.gameState)
     }
 }

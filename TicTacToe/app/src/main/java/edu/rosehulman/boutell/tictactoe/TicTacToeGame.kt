@@ -14,7 +14,9 @@ class TicTacToeGame() {
     // a ?, which means to only access the object's fields/methods if the object
     // isn't null, or a !!, which is the hammer to tell Kotlin you know it's not
     // null and it must proceed whether it wants to or not!
-    private var board = Array(NUM_ROWS) { IntArray(NUM_COLUMNS) }
+    // private var board = Array(NUM_ROWS) { IntArray(NUM_COLUMNS) }
+    private var board = Array(NUM_ROWS) { Array(NUM_COLUMNS) {Mark.NONE}}
+
     var gameState = GameState.X_TURN
 
     private lateinit var context: Context
@@ -29,37 +31,38 @@ class TicTacToeGame() {
 
     fun resetGame() {
         gameState = GameState.X_TURN
-        board = Array(NUM_ROWS) { IntArray(NUM_COLUMNS) }
+        board = Array(NUM_ROWS) { Array(NUM_COLUMNS) {Mark.NONE}}
+        // board = Array(NUM_ROWS) { IntArray(NUM_COLUMNS) }
     }
 
     fun stringForButtonAt(row: Int, column: Int): String {
         // Don't like to explicitly use -1? Use "until" in your condition
         // or loop (see next function for an example)
         if (row in 0..(NUM_ROWS - 1) && column in 0..(NUM_COLUMNS - 1)) {
-            if (board[row][column] == MARK_X) {
+            if (board[row][column] == Mark.X) {
                 return "X"
-            } else if (board[row][column] == MARK_O) {
+            } else if (board[row][column] == Mark.Oh) {
                 return "O"
             }
         }
         return ""
     }
 
-    fun pressedButtonAt(row: Int, column: Int) {
+    fun pressButtonAt(row: Int, column: Int) {
         // If already taken, do nothing
         // Otherwise, set the mark
         if (row !in 0 until NUM_ROWS || column !in 0 until NUM_COLUMNS) {
             return
         }
-        if (board[row][column] != MARK_NONE) {
+        if (board[row][column] != Mark.NONE) {
             return
         }
 
         if (gameState == GameState.X_TURN) {
-            board[row][column] = MARK_X
+            board[row][column] = Mark.X
             gameState = GameState.O_TURN
         } else if (gameState == GameState.O_TURN) {
-            board[row][column] = MARK_O
+            board[row][column] = Mark.Oh
             gameState = GameState.X_TURN
         }
         checkForWin()
@@ -70,16 +73,16 @@ class TicTacToeGame() {
             return
         }
         // Check if either piece won.
-        if (didPieceWin(MARK_X)) {
+        if (didPieceWin(Mark.X)) {
             gameState = GameState.X_WIN
-        } else if (didPieceWin(MARK_O)) {
+        } else if (didPieceWin(Mark.Oh)) {
             gameState = GameState.O_WIN
         } else if (isBoardFull()) {
             gameState = GameState.TIE_GAME
         }
     }
 
-    private fun didPieceWin(mark: Int): Boolean {
+    private fun didPieceWin(mark: Mark): Boolean {
         for (row in 0 until NUM_ROWS) {
             var winHere = true
             for (col in 0 until NUM_COLUMNS) {
@@ -129,7 +132,7 @@ class TicTacToeGame() {
     fun isBoardFull(): Boolean {
         for (row in 0 until NUM_ROWS) {
             for (col in 0 until NUM_COLUMNS) {
-                if (board[row][col] == MARK_NONE) {
+                if (board[row][col] == Mark.NONE) {
                     return false
                 }
             }
@@ -145,6 +148,12 @@ class TicTacToeGame() {
         TIE_GAME
     }
 
+    enum class Mark {
+        NONE,
+        X,
+        Oh
+    }
+
     // Pulling strings from resources requires a context, so we need
     // an additional constructor.
     fun stringForGameState(): String {
@@ -157,13 +166,9 @@ class TicTacToeGame() {
         }
     }
 
+    // Could also declare these at top level (outside of class).
     companion object {
-        val NUM_ROWS = 3
-        val NUM_COLUMNS = 3
-        // I probably should have used an enumeration for the marks too.
-        private val MARK_NONE = 0
-        private val MARK_X = 1
-        private val MARK_O = 2
+        const val NUM_ROWS = 3
+        const val NUM_COLUMNS = 3
     }
-
 }

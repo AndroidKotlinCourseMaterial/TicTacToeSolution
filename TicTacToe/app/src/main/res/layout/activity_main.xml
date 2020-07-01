@@ -19,25 +19,15 @@
 
             <Button
                 android:id="@+id/button00"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:text="@string/space"
-                android:textSize="72sp" />
+                style="@style/TTTButton" />
 
             <Button
                 android:id="@+id/button01"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:gravity="center"
-                android:text="@string/space"
-                android:textSize="72sp" />
+                style="@style/TTTButton" />
 
             <Button
                 android:id="@+id/button02"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:text="@string/space"
-                android:textSize="72sp" />
+                style="@style/TTTButton" />
         </TableRow>
 
         <TableRow
@@ -46,25 +36,15 @@
 
             <Button
                 android:id="@+id/button10"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:text="@string/space"
-                android:textSize="72sp" />
+                style="@style/TTTButton" />
 
             <Button
                 android:id="@+id/button11"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:gravity="center"
-                android:text="@string/space"
-                android:textSize="72sp" />
+                style="@style/TTTButton" />
 
             <Button
                 android:id="@+id/button12"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:text="@string/space"
-                android:textSize="72sp" />
+                style="@style/TTTButton" />
         </TableRow>
 
         <TableRow

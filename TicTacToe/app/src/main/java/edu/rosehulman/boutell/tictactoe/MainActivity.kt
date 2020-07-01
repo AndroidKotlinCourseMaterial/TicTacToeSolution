@@ -1,7 +1,7 @@
 package edu.rosehulman.boutell.tictactoe
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.widget.Button
 import kotlinx.android.synthetic.main.activity_main.*
@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
                 val id = resources.getIdentifier("button$row$col", "id", packageName)
                 tttButtons[row][col] = findViewById(id)
                 tttButtons[row][col]?.setOnClickListener {
-                    game.pressedButtonAt(row, col)
+                    game.pressButtonAt(row, col)
                     updateView()
                     Log.d(Constants.TAG, "Pressed button ($row,$col)")
                 }
